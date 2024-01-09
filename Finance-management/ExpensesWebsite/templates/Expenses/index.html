@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="">Expenses</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            My Expenses
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <a href="{% url 'Add_Expenses'%}" class="btn btn-primary">Add Expense</a>
+    </div>
+  </div>
+
+<div class="card">
+  {% include 'partials/messages.html' %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Created by</th>
+        <th>Created at</th>
+      </tr>
+    </thead>
+
+    <tbody id="mytable">
+      {% for expense in expenses %}
+      <tr>
+        <td>{{expense.name}}</td>
+        <td>{{expense.description}}</td>
+        <td>{{expense.category}}</td>
+        <td>{{expense.date}}</td>
+        <td>{{expense.amount}}</td>
+        <td>{{request.user.username}}</td>
+        <td>{{expense.date}}</td>
+        <td><a href="{%url 'Expense_Edit' expense.id %}" class="btn btn-secondary btn-sm">Edit</a></td>
+        <td><a href="{% url 'Expense_Delete' expense.id %}" class="btn btn-danger btn-sm">Delete</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
